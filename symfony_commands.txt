@@ -1,0 +1,148 @@
+######################################
+Git commands :
+---------------
+Problem 
+Cloning into foo-private...
+Password:
+error: error setting certificate verify locations:
+  CAfile: /bin/curl-ca-bundle.crt
+  CApath: none
+ while accessing https://foo@github.com/foo/foo-private.git/info/refs
+
+fatal: HTTP request failed
+
+Solution  : uce the following command to specify the ca-bundle.crt location
+    git config --system http.sslcainfo "D:\Program Files\Git\mingw64\ssl\certs\ca-bundle.crt"
+
+git config --system http.sslcainfo "D:\Program Files\Git\mingw64\ssl\certs\ca-bundle.crt"	
+git config --global user.name "OUSSAMA-EZZIOURI"
+git config --global user.email oussama.ezziouri@gmail.com
+
+--- To clone a remote repository in local folder
+git clone https://github.com/OUSSAMA-EZZIOURI/todolist.git
+
+--- To push a local folder to a remote repository
+   Go back to your project in the terminal/command line.
+   In your terminal/command line, type git remote add origin [copied web address]
+Example: git remote add origin https://github.com/OUSSAMA-EZZIOURI/todolist.git
+
+    Push your branch to Github: git push origin master
+
+---After doing your changes add the files to git
+git add (file names)    
+git status
+
+--- Set a commit message
+git commit -m "First commit" [file name]
+
+--- Push origin to master
+git push -u origin master 
+
+Create a new branch named issue1.
+git branch <branch_name> 
+
+Use the checkout command to switch branch.
+git checkout <branch> 
+
+We can delete a branch by calling the branch command and passing in the -d option, followed by the branch name.
+git branch -d <branchname> 
+
+######################################
+Recipes :
+-----------
+//to use asset function/recipe in twig pages
+composer require asset
+
+Clear the cache 
+---------------
+php ./bin/console cache:clear
+
+######################################
+Services :
+-----------
+Run the server
+--------------
+php ./bin/console server:run
+
+Listing all routes in the app :
+-------------------------------
+php ./bin/console debug:router
+
+List all autowiring services
+php ./bin/console debug:autowiring
+
+
+######################################
+Install Apache pack
+-------------------------
+Adding Rewrite Rules
+composer require symfony/apache-pack
+
+
+######################################
+Install Doctrine
+-------------------------
+composer require doctrine maker
+
+1- Open .env and change the line bellow according to your case
+DATABASE_URL=mysql://root:@127.0.0.1:3306/todolist
+
+2- Then, tape in console commande : 
+php ./bin/console doctrine:database:create
+
+3- Creating an Entity Class 'Task'
+php ./bin/console make:entity Task
+
+4- Migrations: Creating the Database Tables/Schema
+php bin/console make:migration
+
+5- Next: Review the new migration "src/Migrations/Version20181007144914.php"
+6- Then: Run the migration with 
+php bin/console doctrine:migrations:migrate
+
+7- to select data from the table run :
+php ./bin/console doctrine:query:sql "SELECT * FROM task"
+
+8- Create a controller for 'Task' entity
+php ./bin/console make:controller
+######################################
+Fixtures :
+-----------
+9- Insert some dummy users in the new table (install orm-fixtures --dev package
+composer require orm-fixtures --dev
+
+php ./bin/console make:fixtures
+UserFixtures
+
+10-  Next: Open your new fixtures class and start customizing it.
+     Load your fixtures by running:
+php ./bin/console doctrine:fixtures:load
+
+11- Creating authenticator :
+
+php bin/console make:auth
+
+######################################
+Functions :
+-----------
+Define a route name in the controller:
+/**
+ * @Route("/tasks/", name="app_homepage" )
+ */
+public function task()
+{
+	return $this->homepage();
+}
+
+Passing argument to a route:
+/**
+ * @Route("/show/{slug}", name="app_show_task")
+ */
+public function show($slug)
+{
+//Your code that uses $slug here !
+}
+
+Generating path :
+<a href="{{ path('app_task_homepage') }}">Home</a>
+
