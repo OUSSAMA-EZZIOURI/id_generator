@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 
+use App\Entity\Prefix;
 use App\Entity\Sequencer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -19,8 +20,8 @@ class SequencerController extends AbstractController
      */
     public function homepage()
     {
-
         return $this->render('index.html.twig');
+
     }
 
 
@@ -30,6 +31,7 @@ class SequencerController extends AbstractController
      */
     public function getSequence()
     {
+
         //$last_sequence = $this->getDoctrine()->getRepository(Sequencer::class)->findOneBy(array(),array('id'=>'DESC'),0,1);
 
         //return $this->render('getSequence.html.twig', ["last_id"=> $last_sequence->getId()]);
@@ -42,6 +44,7 @@ class SequencerController extends AbstractController
      */
     public function generateSequence()
     {
+        //Get the manager
         $em = $this->getDoctrine()->getManager();
         $objSeq = new Sequencer();
         $objSeq
@@ -52,7 +55,18 @@ class SequencerController extends AbstractController
 
         $em->persist($objSeq);
         $em->flush();
-        return new JsonResponse(['new_sequence' => sprintf('%04d', $objSeq->getId())]);
+
+        //Get the prefix from 'Prefix' table
+        $prefixResult = $this->getDoctrine()->getRepository(Prefix::class)->findOneBy(array(),array('id'=>'DESC'),0,1);
+        $prefixAndSeq = $prefixResult->getPrefix().sprintf('%06d', $objSeq->getId());
+        //Update the sequence fiedl with number on 6 digits
+        $objSeq->setSequence($prefixAndSeq);
+
+        $em->persist($objSeq);
+        $em->flush();
+
+        //Return the new ID to the form
+        return new JsonResponse(['new_sequence' => $prefixAndSeq]);
     }
 
     /**
