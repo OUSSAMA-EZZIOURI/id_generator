@@ -6,9 +6,7 @@ namespace App\Controller;
 use App\Entity\Prefix;
 use App\Entity\Sequencer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 
@@ -23,7 +21,6 @@ class SequencerController extends AbstractController
         return $this->render('index.html.twig');
 
     }
-
 
 
     /**
@@ -57,8 +54,8 @@ class SequencerController extends AbstractController
         $em->flush();
 
         //Get the prefix from 'Prefix' table
-        $prefixResult = $this->getDoctrine()->getRepository(Prefix::class)->findOneBy(array(),array('id'=>'DESC'),0,1);
-        $prefixAndSeq = $prefixResult->getPrefix().sprintf('%06d', $objSeq->getId());
+        $prefixResult = $this->getDoctrine()->getRepository(Prefix::class)->findOneBy(array(), array('id' => 'DESC'), 0, 1);
+        $prefixAndSeq = $prefixResult->getPrefix() . sprintf('%06d', $objSeq->getId());
         //Update the sequence fiedl with number on 6 digits
         $objSeq->setSequence($prefixAndSeq);
 
@@ -89,27 +86,27 @@ class SequencerController extends AbstractController
     }
 
 
-    /**
-     * @Route("/reserve", name="reserve_sequence")
-     */
-    public function reserve()
-    {
-
-
-        $em = $this->getDoctrine()->getManager();
-        $objSeq = new Sequencer();
-        $objSeq
-            ->setUsername($this->getUser()->getUsername())
-            ->setUsername($this->getUser()->getUsername())
-            ->setAgency($this->getUser()->getAgency())
-            ->setCreatetime(new \DateTime());
-
-        $em->persist($objSeq);
-        $em->flush();
-
-        return new Response("Saved task with id " . $objSeq->getId());
-        //Todo update the sequence field after confirmation with a prefix+ID
-
-    }
+//    /**
+//     * @Route("/reserve", name="reserve_sequence")
+//     */
+//    public function reserve()
+//    {
+//
+//
+//        $em = $this->getDoctrine()->getManager();
+//        $objSeq = new Sequencer();
+//        $objSeq
+//            ->setUsername($this->getUser()->getUsername())
+//            ->setUsername($this->getUser()->getUsername())
+//            ->setAgency($this->getUser()->getAgency())
+//            ->setCreatetime(new \DateTime());
+//
+//        $em->persist($objSeq);
+//        $em->flush();
+//
+//        return new Response("Saved task with id " . $objSeq->getId());
+//        //Todo update the sequence field after confirmation with a prefix+ID
+//
+//    }
 
 }
