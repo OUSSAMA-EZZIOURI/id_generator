@@ -85,23 +85,29 @@
 <aside id="left-panel" class="left-panel">
     <nav class="navbar navbar-expand-sm navbar-default">
         <div id="main-menu" class="main-menu collapse navbar-collapse">
-
             <ul class="nav navbar-nav">
-                {% if app.request.uri == path('homepage') %}
+
                 <li class="active">
-                {% else %}
-                <li>
-                {% endif %}
                     <a href="{{ path('homepage') }}"><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
                 </li>
-                <li>
-                    <a href="{{ path('get_sequence') }}"><i class="menu-icon fa fa-plus"></i>Réserver une sequence</a>
+
+
+                <li  class="menu-item-has-children dropdown show">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="true"> <i class="menu-icon fa fa-cog"></i>Séquences</a>
+                    <ul class="sub-menu children dropdown-menu show">
+                        <li><i class="menu-icon fa fa-list"></i><a href="{{ path('homepage') }}">Toutes les séquences</a></li>
+                        <li><i class="menu-icon fa fa-plus"></i><a href="{{ path('get_sequence') }}">Génerer une sequence</a></li>
+                        <li><i class="menu-icon fa fa-filter"></i><a href="{{ path('my_sequences') }}">Mes séquences</a></li>
+                    </ul>
                 </li>
-                <li>
-                    <a href="{{ path('all_sequences') }}"><i class="menu-icon fa fa-list"></i>Toutes les séquences</a>
-                </li>
-                <li>
-                    <a href="{{ path('my_sequences') }}"><i class="menu-icon fa fa-filter"></i>Mes séquences</a>
+                <li class="menu-item-has-children dropdown show">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="true"> <i class="menu-icon fa fa-user"></i>Utilisateus</a>
+                    <ul class="sub-menu children dropdown-menu show">
+                        <li><i class="menu-icon fa fa-list"></i><a href="{{ path('all_users') }}">Utilisateurs</a></li>
+                        <li><i class="menu-icon fa fa-plus"></i><a href="{{ path('new_user') }}">Nouveau</a></li>
+                    </ul>
                 </li>
 
             </ul>
@@ -283,10 +289,10 @@
             //Once the button id="generate_sequence_btn"  is clicked in getSequence.html.twig page
             //A new sequence is generated in the database and set to value attribut of #sequence
             //field
-            $('#generate_sequence_btn').on('click', function(e) {
+            $('#generate_sequence_btn').on('click', function (e) {
                 e.preventDefault();
 
-                if(confirm("Confirmez-vous la génération d'une nouvelle séquence ?")) {
+                if (confirm("Confirmez-vous la génération d'une nouvelle séquence ?")) {
                     var $link = $(e.currentTarget);
 
                     $.ajax({

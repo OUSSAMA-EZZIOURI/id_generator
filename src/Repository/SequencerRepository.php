@@ -19,6 +19,11 @@ class SequencerRepository extends ServiceEntityRepository
         parent::__construct($registry, Sequencer::class);
     }
 
+    public function findAll()
+    {
+        return $this->findBy(array(), array('createtime' => 'DESC'));
+    }
+
 //    /**
 //     * @return Sequencer[] Returns an array of Sequencer objects
 //     */

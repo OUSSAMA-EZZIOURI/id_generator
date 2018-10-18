@@ -146,3 +146,8 @@ public function show($slug)
 Generating path :
 <a href="{{ path('app_task_homepage') }}">Home</a>
 
+#######################################
+Twig usefull functions:
+
+-Render a date with twig
+{{ game.gameDate|date('Y-m-d') }}

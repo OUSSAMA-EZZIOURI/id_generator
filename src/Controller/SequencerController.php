@@ -18,7 +18,11 @@ class SequencerController extends AbstractController
      */
     public function homepage()
     {
-        return $this->render('index.html.twig');
+        $sequences = $this->getDoctrine()
+            ->getRepository(Sequencer::class)
+            ->findAll();
+
+        return $this->render('index.html.twig', ['sequences' => $sequences]);
 
     }
 
@@ -28,10 +32,6 @@ class SequencerController extends AbstractController
      */
     public function getSequence()
     {
-
-        //$last_sequence = $this->getDoctrine()->getRepository(Sequencer::class)->findOneBy(array(),array('id'=>'DESC'),0,1);
-
-        //return $this->render('getSequence.html.twig', ["last_id"=> $last_sequence->getId()]);
         return $this->render('getSequence.html.twig');
     }
 
@@ -72,7 +72,7 @@ class SequencerController extends AbstractController
     public function allSequences()
     {
 
-        return $this->render('allSequences.html.twig');
+        return $this->homepage();
     }
 
 
