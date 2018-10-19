@@ -1,10 +1,53 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
+    <div class="content pb-0">
 
 
+        <div class="clearfix"></div>
+        <div class="orders">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="box-title">Utilisateurs </h4>
+                        </div>
+                        <div class="card-body--">
+                            <div class="table-stats order-table ov-h">
+                                <table class="table ">
+                                    <thead>
+                                    <tr>
+                                        <th class="serial">#</th>
+                                        <th>Agence</th>
+                                        <th>Nom / Prénom</th>
+                                        <th>Email</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for u in users %}
+                                        <tr>
+                                            <td class="serial">{{ u.id }}</td>
+                                            <td>{{ u.agency }}</td>
+                                            <td><span class="name">{{ u.username }}</span></td>
+                                            <td><span class="product">{{ u.email }}</span></td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div> <!-- /.table-stats -->
+                        </div>
+                    </div> <!-- /.card -->
+                </div>  <!-- /.col-lg-8 -->
+
+
+            </div> <!-- /.order -->
+
+
+        </div> <!-- .content -->
+
+    </div> <!-- .content -->
 {% endblock %}
 
-{% block javascripts %}
-    {{ parent() }}
-{% endblock %}
+    {% block javascripts %}
+        {{ parent() }}
+    {% endblock %}

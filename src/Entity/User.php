@@ -85,6 +85,23 @@ class User implements UserInterface
     }
 
     /**
+     * Returns the username used to authenticate the user.
+     *
+     * @return string The username
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    /**
      * Returns the roles granted to the user.
      *
      * <code>
@@ -117,15 +134,7 @@ class User implements UserInterface
         // TODO: Implement getSalt() method.
     }
 
-    /**
-     * Returns the username used to authenticate the user.
-     *
-     * @return string The username
-     */
-    public function getUsername()
-    {
-        return $this->username;
-    }
+
 
     /**
      * Removes sensitive data from the user.
@@ -169,10 +178,5 @@ class User implements UserInterface
         return $this;
     }
 
-    public function setUsername(string $username): self
-    {
-        $this->username = $username;
 
-        return $this;
-    }
 }
