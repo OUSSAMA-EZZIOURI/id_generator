@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -20,16 +21,23 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $agency;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Email(
+     *     message = "The email '{{ value }}' is not a valid email.",
+     *     checkMX = true
+     * )
      */
     private $email;
 
@@ -40,8 +48,19 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $username;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $create_time;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $edit_time;
 
     public function getId(): ?int
     {
@@ -174,6 +193,30 @@ class User implements UserInterface
     public function setRoles(?array $roles): self
     {
         $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function getCreateTime(): ?\DateTimeInterface
+    {
+        return $this->create_time;
+    }
+
+    public function setCreateTime(\DateTimeInterface $create_time): self
+    {
+        $this->create_time = $create_time;
+
+        return $this;
+    }
+
+    public function getEditTime(): ?\DateTimeInterface
+    {
+        return $this->edit_time;
+    }
+
+    public function setEditTime(\DateTimeInterface $edit_time): self
+    {
+        $this->edit_time = $edit_time;
 
         return $this;
     }

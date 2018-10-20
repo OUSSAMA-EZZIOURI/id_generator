@@ -146,6 +146,9 @@ public function show($slug)
 Generating path :
 <a href="{{ path('app_task_homepage') }}">Home</a>
 
+
+Get Form data in a controller:
+$form->getData()
 #######################################
 Twig usefull functions:
 
