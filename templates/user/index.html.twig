@@ -1,6 +1,22 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
+    <div class="breadcrumbs">
+        <div class="breadcrumbs-inner">
+            <div class="row m-0">
+                <div class="col-sm-4">
+                    <div class="page-header float-left">
+                        <div class="page-title">
+                            <ol class="breadcrumb text-left">
+                                <li class="active">{{ title }}</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="content pb-0">
 
 
@@ -9,9 +25,6 @@
             <div class="row">
                 <div class="col-xl-12">
                     <div class="card">
-                        <div class="card-body">
-                            <h4 class="box-title">Utilisateurs </h4>
-                        </div>
                         <div class="card-body--">
                             <div class="table-stats order-table ov-h">
                                 <table class="table ">
@@ -34,9 +47,8 @@
                                             <td>
                                                 <span class="product">
                                                     <div class="btn-group" role="group" aria-label="Actions">
-                                                        <a href="{{ path('edit_user', {'id':u.id}) }}" type="button" class="btn btn-sm btn-success">Editer</a>
-                                                        <a href="#" type="button" class="btn btn-sm btn-success">Activer</a>
-                                                        <a href="#" type="button" class="btn btn-sm btn-danger">Supprimer</a>
+                                                        <a href="{{ path('edit_user', {'id':u.id}) }}" type="button" class="btn btn-sm btn-light"><i class="fa fa-edit"></i></a>
+                                                        <a href="#" type="button" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
                                                     </div>
                                                 </span>
                                             </td>

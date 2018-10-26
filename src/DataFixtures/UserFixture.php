@@ -36,10 +36,13 @@ class UserFixture extends Fixture
         $user->setEmail('admin@admin.com');
         $user->setUsername('Administrator');
         $user->setAgency('Global');
+        $user->setCreateTime(new \DateTime());
+        $user->setEditTime(new \DateTime());
         $user->setPassword($this->passwordEncoder->encodePassword(
             $user,
             'admin2018'
         ));
+        $user->setRoles(array('ROLE_ADMIN'));
         $manager->persist($user);
         $manager->flush();
 

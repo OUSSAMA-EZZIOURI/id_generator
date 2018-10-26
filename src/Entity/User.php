@@ -3,15 +3,24 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Security\Core\Encoder\EncoderFactory;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class User implements UserInterface
-    //, \Serializable
 {
+    /**
+     * A non-persisted field that's used to create the encoded password.
+     *
+     * @var string
+     */
+    private $plainPassword;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -79,6 +88,29 @@ class User implements UserInterface
         return $this;
     }
 
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword($plainPassword): self
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
+
+    /**
+     * Removes sensitive data from the user.
+     *
+     * This is important if, at any given point, sensitive information like
+     * the plain-text password is stored on this object.
+     */
+    public function eraseCredentials()
+    {
+        $this->plainPassword = null;
+    }
+
     public function getAgency(): ?string
     {
         return $this->agency;
@@ -120,26 +152,15 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * Returns the roles granted to the user.
-     *
-     * <code>
-     * public function getRoles()
-     * {
-     *     return array('ROLE_USER');
-     * }
-     * </code>
-     *
-     * Alternatively, the roles might be stored on a ``roles`` property,
-     * and populated in any number of different ways when the user object
-     * is created.
-     *
-     * @return (Role|string)[] The user roles
-     */
     public function getRoles()
     {
-        return array('ROLE_USER');
+        $tmpRoles = $this->roles;
+        if (in_array('ROLE_USER', $tmpRoles) === false) {
+            $tmpRoles[] = 'ROLE_USER';
+        }
+        return $tmpRoles;
     }
+
 
     /**
      * Returns the salt that was originally used to encode the password.
@@ -153,43 +174,6 @@ class User implements UserInterface
         // TODO: Implement getSalt() method.
     }
 
-
-
-    /**
-     * Removes sensitive data from the user.
-     *
-     * This is important if, at any given point, sensitive information like
-     * the plain-text password is stored on this object.
-     */
-    public function eraseCredentials()
-    {
-        // TODO: Implement eraseCredentials() method.
-    }
-
-//    public function serialize()
-//    {
-//        return $this->serialize([
-//            $this->id,
-//            $this->fname,
-//            $this->lname,
-//            $this->email,
-//            $this->password,
-//            $this->username,
-//            $this->agency
-//        ]);
-//    }
-//
-//    public function unserialize ($string)
-//    {
-//        list($this->id,
-//            $this->fname,
-//            $this->lname,
-//            $this->email,
-//            $this->password,
-//            $this->username,
-//            $this->agency) = unserialize($string, ['allowed_classes' => false]);
-//    }
-
     public function setRoles(?array $roles): self
     {
         $this->roles = $roles;
@@ -202,9 +186,12 @@ class User implements UserInterface
         return $this->create_time;
     }
 
-    public function setCreateTime(\DateTimeInterface $create_time): self
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreateTime(): self
     {
-        $this->create_time = $create_time;
+        $this->create_time = new \DateTime();
 
         return $this;
     }

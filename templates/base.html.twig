@@ -92,24 +92,31 @@
                 </li>
 
 
-                <li  class="menu-item-has-children dropdown show">
+                <li class="menu-item-has-children dropdown {#show#}">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                        aria-expanded="true"> <i class="menu-icon fa fa-cog"></i>Séquences</a>
-                    <ul class="sub-menu children dropdown-menu show">
-                        <li><i class="menu-icon fa fa-list"></i><a href="{{ path('homepage') }}">Toutes les séquences</a></li>
-                        <li><i class="menu-icon fa fa-plus"></i><a href="{{ path('get_sequence') }}">Génerer une sequence</a></li>
-                        <li><i class="menu-icon fa fa-filter"></i><a href="{{ path('my_sequences') }}">Mes séquences</a></li>
-                    </ul>
-                </li>
-                <li class="menu-item-has-children dropdown show">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                       aria-expanded="true"> <i class="menu-icon fa fa-user"></i>Utilisateus</a>
-                    <ul class="sub-menu children dropdown-menu show">
-                        <li><i class="menu-icon fa fa-list"></i><a href="{{ path('all_users') }}">Utilisateurs</a></li>
-                        <li><i class="menu-icon fa fa-plus"></i><a href="{{ path('create_user') }}">Nouveau</a></li>
+                    <ul class="sub-menu children dropdown-menu">
+                        <li><i class="menu-icon fa fa-list"></i><a href="{{ path('homepage') }}">Toutes les
+                                séquences</a></li>
+                        <li><i class="menu-icon fa fa-plus"></i><a href="{{ path('get_sequence') }}">Génerer une
+                                sequence</a></li>
+                        <li><i class="menu-icon fa fa-filter"></i><a href="{{ path('my_sequences') }}">Mes séquences</a>
+                        </li>
                     </ul>
                 </li>
 
+
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="true"> <i class="menu-icon fa fa-user"></i>Utilisateus</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon fa fa-list"></i><a href="{{ path('all_users') }}">Utilisateurs</a>
+                            </li>
+                            <li><i class="menu-icon fa fa-plus"></i><a href="{{ path('create_user') }}">Nouveau</a></li>
+                        </ul>
+                    </li>
+                {% endif %}
             </ul>
         </div><!-- /.navbar-collapse -->
     </nav>
@@ -134,7 +141,8 @@
                     <div class="user-area dropdown float-right">
                         <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true"
                            aria-expanded="false">
-                            <img class="user-avatar rounded-circle" src="{{ asset('images/admin.jpg') }}" alt="{{ app.user.username }}">
+                            <img class="user-avatar rounded-circle" src="{{ asset('images/admin.jpg') }}"
+                                 alt="{{ app.user.username }}">
                         </a>
 
                         <div class="user-menu dropdown-menu">
@@ -153,6 +161,7 @@
             </div>
     </header><!-- /header -->
     <!-- Header-->
+
     {% block content %}
 
     {% endblock %}
